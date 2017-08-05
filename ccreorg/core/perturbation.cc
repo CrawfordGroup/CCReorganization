@@ -4,11 +4,12 @@
 #include <psi4/libqt/qt.h>
 #include <psi4/libmints/mintshelper.h>
 #include <psi4/libmints/matrix.h>
-#include "psi4/libparallel/ParallelPrinter.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi { namespace ccreorg {
-
-Perturbation::Perturbation(std::string op, shared_ptr<Wavefunction> ref, 
+typedef psi::PsiOutStream  OutFile;
+Perturbation::Perturbation(std::string op, shared_ptr<Wavefunction> ref,
                            shared_ptr<MintsHelper> mints, bool full_virtual_space)
 {
   operator_ = op;
@@ -21,7 +22,7 @@ Perturbation::Perturbation(std::string op, shared_ptr<Wavefunction> ref,
   std::vector<int> frzvpi(ref->nirrep());
   if(!full_virtual_space)
     for(int i=0; i < ref->nirrep(); i++) { frzvpi[i] = ref->frzvpi()[i]; nfzv += ref->frzvpi()[i]; }
-  else 
+  else
     for(int i=0; i < ref->nirrep(); i++) frzvpi[i] = 0;
   nact_ = nmo - nfzc - nfzv;
 
