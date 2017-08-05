@@ -1,6 +1,6 @@
 # PYTHONPATH must include directory above plugin directory.
 #     Define either externally or here, then import plugin.
-sys.path.insert(0, './..')
+#sys.path.insert(0, './..')
 import ugacc
 
 molecule {
