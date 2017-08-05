@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class Hamiltonian {
 public:
@@ -33,6 +33,6 @@ protected:
   friend class CCPert;
 }; // Hamiltonian
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif // HAMILTONIAN_H

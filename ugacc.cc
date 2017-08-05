@@ -1,7 +1,7 @@
 /*
  * @BEGIN LICENSE
  *
- * ugacc by T. Daniel Crawford, a plugin to:
+ * ccreorg by T. Daniel Crawford, a plugin to:
  *
  * Psi4: an open-source quantum chemistry software package
  *
@@ -49,7 +49,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 extern "C" 
 int read_options(std::string name, Options& options)
@@ -71,7 +71,7 @@ int read_options(std::string name, Options& options)
 }
 
 extern "C" 
-SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
+SharedWavefunction ccreorg(SharedWavefunction ref, Options& options)
 {
   outfile->Printf("\n");
   outfile->Printf("\t\t\t**************************\n");

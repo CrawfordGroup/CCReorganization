@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class CCLambda {
 public:
@@ -68,6 +68,6 @@ public:
 
 }; // CCLambda
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif // CCLAMBDA_H

@@ -12,7 +12,7 @@
 
 #define ID(x) ints.DPD_ID(x)
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 Hamiltonian::Hamiltonian(shared_ptr<PSIO> psio, shared_ptr<Wavefunction> ref, std::vector<shared_ptr<MOSpace> > spaces)
 {
@@ -106,4 +106,4 @@ Hamiltonian::~Hamiltonian()
   free_block(fock_); 
 }
 
-}} // namespace psi::ugacc
+}} // namespace psi::ccreorg

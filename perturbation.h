@@ -16,7 +16,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class Perturbation {
 public:
@@ -47,6 +47,6 @@ private:
   bool quadrupole(std::string op);
 };
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif // PERTURBATION_H

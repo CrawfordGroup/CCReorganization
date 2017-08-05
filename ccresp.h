@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class CCResp {
 public:
@@ -26,6 +26,6 @@ protected:
   shared_ptr<CCPert> X_;
 };
 
-}} // psi::ugaccc
+}} // psi::ccreorgc
 
 #endif

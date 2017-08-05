@@ -6,7 +6,7 @@
 #include <psi4/libmints/matrix.h>
 #include "psi4/libparallel/ParallelPrinter.h"
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 Perturbation::Perturbation(std::string op, shared_ptr<Wavefunction> ref, 
                            shared_ptr<MintsHelper> mints, bool full_virtual_space)
@@ -189,4 +189,4 @@ bool Perturbation::quadrupole(std::string op)
   else return false;
 }
 
-}} // psi::ugacc
+}} // psi::ccreorg

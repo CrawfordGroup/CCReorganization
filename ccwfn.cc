@@ -6,7 +6,7 @@
 #include <cmath>
 #include <psi4/libdiis/diismanager.h>
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 CCWfn::CCWfn(shared_ptr<Wavefunction> reference, shared_ptr<Hamiltonian> H, 
              Options &options) : Wavefunction(options)
@@ -1412,4 +1412,4 @@ void CCWfn::N3_abc(double ***N3, int a, int b, int c, double ****t2, double **t1
       } // ijk
 }
 
-}} // psi::ugacc
+}} // psi::ccreorg

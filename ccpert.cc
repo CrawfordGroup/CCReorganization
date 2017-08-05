@@ -5,7 +5,7 @@
 #include <psi4/libdiis/diismanager.h>
 #include "array.h"
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 CCPert::CCPert(double **pert, double omega, shared_ptr<CCWfn> CC, shared_ptr<HBAR> HBAR, shared_ptr<CCLambda> CCLambda)
 {
@@ -891,4 +891,4 @@ void CCPert::build_Y2()
 }
 
 
-}} // psi::ugacc
+}} // psi::ccreorg

@@ -3,7 +3,7 @@
 #include <psi4/libqt/qt.h>
 #include <psi4/libciomr/libciomr.h>
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 HBAR::HBAR(shared_ptr<Hamiltonian> H, shared_ptr<CCWfn> CC)
 {
@@ -244,4 +244,4 @@ HBAR::~HBAR()
   free_4d_array(Hvvvo_, nv, nv, nv);
 }
 
-}} // psi::ugacc
+}} // psi::ccreorg

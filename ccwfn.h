@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class CCWfn: public Wavefunction {
 public:
@@ -110,6 +110,6 @@ public:
   friend class CCResp;
 }; // CCWfn
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif // CCWFN_H
