@@ -14,21 +14,16 @@ import os
 import subprocess as sp
 import shutil
 
-try:
-    import psi4
-except ImportError:
-    raise ImportError("Cannot find Psi4. Please make sure Psi4 is installed so"
-                      "that this setup script can detect Psi4's CMake dependency trees.\n"
-                      "Please run the following conda command: 'conda install psi4 -c psi4'")
-
 
 def sanitize_cmake(output):
     print_out = []
 
     # Cut out a few warnings that are a bit annoying, GCC wont let us override them
     warnings = [
-        ' warning: section "__textcoal_nt"', 'note: change section name to "__const"',
-        'change section name to "__text"', 'note: change section name to "__data"',
+        ' warning: section "__textcoal_nt"',
+        'note: change section name to "__const"',
+        'change section name to "__text"',
+        'note: change section name to "__data"',
         ' warning: section "__datacoal_nt"', 'warning: section "__const_coal"'
     ]
     x = 0
@@ -47,9 +42,37 @@ def sanitize_cmake(output):
 
 class cmake_build(install):
 
+    def _which(self, progname):
+        output = sp.check_output(['which', progname]).decode('utf-8').strip()
+        return output
+
     #    description = 'Build the nested CMake'
 
     def run(self):
+
+        print("Checking for psi4...")
+        try:
+            output = self._which('psi4')
+            print(">>> which psi4")
+            print("{}".format(output))
+        except sp.CalledProcessError:
+            print("""
+            Psi4 could not be found!
+
+            If you have a working build env make sure you activate it before
+            trying to build:
+            >>> source activate <build_env_name>
+            >>> python setup.py clean
+            >>> python setup.py cmake
+
+            If you need a build environment created for you use:
+
+            >>> python setup.py easyenv
+            >>> source activate ccreorg
+            >>> python setup.py clean
+            >>> python setup.py cmake
+            """)
+
 
         # Find build directory (in-place)
         abspath = os.path.abspath(os.path.dirname(__file__))
@@ -73,7 +96,9 @@ class cmake_build(install):
 
         # Run install
         print("Compiling...")
-        output = sp.check_output(["make", "-j2", "VERBOSE=1"], stderr=sp.STDOUT).decode("UTF-8").splitlines()
+        output = sp.check_output(
+            ["make", "-j2", "VERBOSE=1"],
+            stderr=sp.STDOUT).decode("UTF-8").splitlines()
         print_out = sanitize_cmake(output)
         #print_out = '\n'.join(output)
         print(">>> make -j2\n{}".format(print_out))
@@ -96,7 +121,10 @@ class cmake_clean(install):
         except:
             pass
 
-        files = ["CMakeCache.txt", "Makefile", "timer.dat", "cmake_install.cmake", "core.so"]
+        files = [
+            "CMakeCache.txt", "Makefile", "timer.dat", "cmake_install.cmake",
+            "core.so"
+        ]
         for f in files:
             try:
                 os.remove(f)
@@ -104,6 +132,7 @@ class cmake_clean(install):
                 pass
 
         print("...finished")
+
 
 class easyenv(install):
     miniconda_instrucitons_OSX = """
@@ -128,8 +157,7 @@ class easyenv(install):
     """
 
     def _which(self, progname):
-        output = sp.check_output(['which',
-            progname]).decode('utf-8').strip()
+        output = sp.check_output(['which', progname]).decode('utf-8').strip()
         return output
 
     def run(self):
@@ -147,38 +175,43 @@ class easyenv(install):
         print(">>> which conda\n{}".format(conda_exe))
 
         conda_pkg_list = [
-                'psi4','numpy','lawrap','cmake',
-                'jupyter','numexpr','mkl-include','gcc-5-mp'
-                ]
+            'psi4', 'numpy', 'lawrap', 'cmake', 'jupyter', 'numexpr',
+            'mkl-include', 'gcc-5-mp'
+        ]
         # first blank needed for "-c ".join... to work
-        conda_channels = [' ','intel','psi4/label/dev','psi4']
+        conda_channels = [' ', 'intel', 'psi4/label/dev', 'psi4']
         if systype.lower() == 'darwin':
             conda_pkg_list += ['gnu']
             print(">>> sysctl machdep | grep features | grep -o AVX2")
             try:
-                avx2 = sp.check_output("sysctl machdep | grep features | grep -o AVX2",
-                        shell=True).decode('utf-8').strip()
+                avx2 = sp.check_output(
+                    "sysctl machdep | grep features | grep -o AVX2",
+                    shell=True).decode('utf-8').strip()
                 print(avx2)
             except:
                 print("<not found>")
                 conda_pkg_list += ['sse41']
 
-        conda_cmd = "conda create -n ccorg python=3.5 "
+        conda_cmd = "conda create --yes -n ccreorg python=3.5 "
         conda_cmd += " ".join(conda_pkg_list)
         conda_cmd += " -c ".join(conda_channels)
 
-        output = sp.check_output(conda_cmd, shell=True, stderr=sp.STDOUT).decode('utf-8').splitlines()
+        print("conda cmd:\n")
+        print("{}".format(conda_cmd))
+
+        output = sp.check_output(
+            conda_cmd, shell=True,
+            stderr=sp.STDOUT).decode('utf-8').splitlines()
         print(">>> {}".format(conda_cmd))
         print("\n".join(output))
         print("... Finished")
 
-        print("Now activate the environment and run:")
+        print("Now activate the environment ")
+        print(">>> source activate ccreorg")
+        print("Then clean out the build files")
+        print(">>> python setup.py clean")
+        print("Then build ")
         print(">>> python setup.py cmake")
-
-
-
-
-
 
 
 if __name__ == "__main__":
@@ -192,9 +225,7 @@ if __name__ == "__main__":
         license='LGPL-3.0',
         packages=setuptools.find_packages(),
         # psi4 is also required, but not in PyPI
-        install_requires=[
-            'numpy>=1.7',
-        ],
+        install_requires=['numpy>=1.7', ],
         extras_require={
             'docs': [
                 'sphinx==1.2.3',  # autodoc was broken in 1.3.1
@@ -212,5 +243,4 @@ if __name__ == "__main__":
             'cmake': cmake_build,
             'clean': cmake_clean,
             'easyenv': easyenv,
-        },
-    )
+        }, )
