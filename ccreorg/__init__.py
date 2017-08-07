@@ -35,9 +35,9 @@ __author__  = 'Psi4 Developer'
 
 # Load Python modules
 from .pymodule import *
+from .core import PLUGIN_SOFILE
 
 # Load C++ plugin
 import psi4
-from core import PLUGIN_SOFILE
 psi4.core.plugin_load(PLUGIN_SOFILE)
 
