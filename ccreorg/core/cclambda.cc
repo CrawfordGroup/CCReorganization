@@ -7,7 +7,7 @@
 
 #include "array.h"
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 CCLambda::CCLambda(shared_ptr<CCWfn> CC, shared_ptr<HBAR> HBAR)
 {
@@ -350,4 +350,4 @@ void CCLambda::save_diis_vectors()
     }
 }
 
-}} // psi::ugacc
+}} // psi::ccreorg

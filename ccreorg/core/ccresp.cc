@@ -3,7 +3,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 
 CCResp::CCResp(shared_ptr<CCPert> X, shared_ptr<CCPert> Y)
@@ -123,4 +123,4 @@ double  CCResp::linresp(shared_ptr<CCPert> X, shared_ptr<CCPert> Y)
 
  }
 
-}} // psi::ugaccc
+}} // psi::ccreorgc

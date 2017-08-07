@@ -31,13 +31,10 @@ cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 
 # These were the compilers used to compile Psi4. They may or may not be
 # required to successfully run your plugin.
-set(CMAKE_C_COMPILER /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/cc)
-set(CMAKE_CXX_COMPILER /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++)
-set(CMAKE_Fortran_COMPILER )
 
 project(ugacc CXX)
 
 find_package(psi4 1.0 REQUIRED)
 
-add_psi4_plugin(ugacc ugacc.cc array.cc ccwfn.cc hamiltonian.cc hbar.cc 
+add_psi4_plugin(ccreorg ccreorg.cc array.cc ccwfn.cc hamiltonian.cc hbar.cc 
 cclambda.cc ccdensity.cc perturbation.cc ccpert.cc ccresp.cc)

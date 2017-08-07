@@ -1,5 +1,5 @@
-sys.path.insert(0, './..')
-import ugacc
+#sys.path.insert(0, './..')
+import ccreorg
 
 molecule {
 0 1
@@ -17,6 +17,6 @@ set {
   ooc true
 }
 
-gradient('ugacc', wfn='ccsd(t)')
+gradient('ccreorg', wfn='ccsd(t)')
 
 

@@ -1,3 +1,11 @@
+#Python install files
+ccreorg.egg-info/**
+
+# testing output files
+test_input/input.h2o.dat
+test_input/input.n2.dat
+test_input/input.hof.dat
+
 # Compiled Object files
 *.slo
 *.lo
@@ -19,6 +27,7 @@
 *.pyc
 
 # Temporary PSI files
+psi.*.clean
 output.dat
 psi.timer.dat
 psi.32

@@ -6,7 +6,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class HBAR {
 public:
@@ -35,6 +35,6 @@ protected:
   friend class CCPert;
 };
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif // HBAR_H

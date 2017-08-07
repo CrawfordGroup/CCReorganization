@@ -8,7 +8,7 @@
 #include "cclambda.h"
 #include "array.h"
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 CCDensity::CCDensity(shared_ptr<CCWfn> CC, shared_ptr<CCLambda> CCLambda)
 {
@@ -338,4 +338,4 @@ double CCDensity::twopdm()
   return Eoooo+Evvvv+Eooov+Evvvo+Eovov+Eoovv;
 }
 
-}} // psi::ugacc
+}} // psi::ccreorg

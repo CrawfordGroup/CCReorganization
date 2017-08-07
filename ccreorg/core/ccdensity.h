@@ -7,7 +7,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 class CCDensity {
 public:
@@ -49,6 +49,6 @@ public:
 
 }; // CCDensity
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif // CCDENSITY_H

@@ -1,7 +1,7 @@
 /*
  * @BEGIN LICENSE
  *
- * ugacc by T. Daniel Crawford, a plugin to:
+ * ccreorg by T. Daniel Crawford, a plugin to:
  *
  * Psi4: an open-source quantum chemistry software package
  *
@@ -28,7 +28,7 @@
  */
 
 #include "psi4/psi4-dec.h"
-#include "psi4/libparallel/parallel.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 #include "psi4/liboptions/liboptions.h"
 #include "psi4/libpsio/psio.hpp"
 
@@ -49,12 +49,12 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
-extern "C" 
+extern "C"
 int read_options(std::string name, Options& options)
 {
-  if(name == "UGACC" || options.read_globals()) {
+  if(name == "CCREORG" || options.read_globals()) {
     options.add_int("PRINT", 1);
     options.add_str("REFERENCE", "RHF");
     options.add_str("WFN", "CCSD");
@@ -70,13 +70,13 @@ int read_options(std::string name, Options& options)
   return true;
 }
 
-extern "C" 
-SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
+extern "C"
+SharedWavefunction ccreorg(SharedWavefunction ref, Options& options)
 {
   outfile->Printf("\n");
   outfile->Printf("\t\t\t**************************\n");
   outfile->Printf("\t\t\t*                        *\n");
-  outfile->Printf("\t\t\t*         UGA-CC         *\n");
+  outfile->Printf("\t\t\t*         CC-REORG       *\n");
   outfile->Printf("\t\t\t*                        *\n");
   outfile->Printf("\t\t\t**************************\n");
   outfile->Printf("\n");
@@ -88,7 +88,7 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
   outfile->Printf("\tOut-of-core    = %s\n", options.get_bool("OOC") ? "Yes" : "No");
   outfile->Printf("\tDertype        = %s\n", options.get_str("DERTYPE").c_str());
   outfile->Printf("\tOMEGA          = %3.1e\n", options.get_double("MY_OMEGA"));
-  outfile->Printf("\tHAND           = %s\n", options.get_str("MYHAND").c_str()); 
+  outfile->Printf("\tHAND           = %s\n", options.get_str("MYHAND").c_str());
 
 
   const char * rol = options.get_str("MYHAND").c_str() ;
@@ -98,7 +98,7 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
   if(options.get_str("REFERENCE") != "RHF")
     throw PSIEXCEPTION("Only for use with RHF references.");
   for(int h=0; h < ref->nirrep(); h++)
-    if(ref->soccpi()[h]) throw PSIEXCEPTION("UGACC is for closed-shell systems only.");
+    if(ref->soccpi()[h]) throw PSIEXCEPTION("CCREORG is for closed-shell systems only.");
 
   shared_ptr<PSIO> psio(_default_psio_lib_);
   std::vector<shared_ptr<MOSpace> > spaces;
@@ -109,7 +109,7 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
   double ecc = cc->compute_energy();
 
   if(options.get_str("DERTYPE") == "NONE") return ref;
- 
+
   shared_ptr<HBAR> hbar(new HBAR(H, cc));
   shared_ptr<CCLambda> cclambda(new CCLambda(cc, hbar));
   cclambda->compute_lambda();
@@ -139,18 +139,18 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
 
   // Solve perturbed wave function equations for given perturbation and +/- field frequency
 
-  map<string, shared_ptr<CCPert> > cc_perts; 
-  map<string, double > polars; 
-  map<string, double > rots; 
+  map<string, shared_ptr<CCPert> > cc_perts;
+  map<string, double > polars;
+  map<string, double > rots;
   double polar;
   double rotation;
   double omega = options.get_double("MY_OMEGA");
   vector<string> cart(3); cart[0] = "X"; cart[1] = "Y"; cart[2] = "Z";
 
   hand my_hand ;
-  if (!strcmp(rol,"RIGHT")) 
+  if (!strcmp(rol,"RIGHT"))
      my_hand = right;
-  else  
+  else
      my_hand = left;
 
   /* Below is the recipe for calculating length gauge optical rotation and polarizability*/
@@ -180,8 +180,8 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
        cc_perts[entry_1]->solve(left);
     }
    }
- 
-  /* Dipole polarizabilities */ 
+
+  /* Dipole polarizabilities */
 
   for(vector<string>::size_type p = 0; p != cart.size(); p++){
     for(vector<string>::size_type q = 0 ; q <= p; q++) {
@@ -193,7 +193,7 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
       else {
          polar = 0.5 * ccpolar->linresp(cc_perts[pert_p], cc_perts[pert_q]);
          polar += 0.5 * ccpolar->linresp(cc_perts[pert_q], cc_perts[pert_p]);
-      }     
+      }
       string label = "<<Mu_" + cart[p] + ";" "Mu_" + cart[q] + ">>";
       polars[label] = polar;
       label = "<<Mu_" + cart[q] + ";" "Mu_" + cart[p] + ">>";
@@ -201,7 +201,7 @@ SharedWavefunction ugacc(SharedWavefunction ref, Options& options)
     }
   }
 
-  /* Length gauge optical rotation */ 
+  /* Length gauge optical rotation */
 
   for(vector<string>::size_type p = 0; p != cart.size(); p++){
     for(vector<string>::size_type q = 0 ; q != cart.size(); q++) {

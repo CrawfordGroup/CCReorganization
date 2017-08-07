@@ -1,7 +1,7 @@
 #
 # @BEGIN LICENSE
 #
-# ugacc by T. Daniel Crawford, a plugin to:
+# ccreorg by T. Daniel Crawford, a plugin to:
 #
 # Psi4: an open-source quantum chemistry software package
 #
@@ -29,13 +29,13 @@
 
 import psi4
 import psi4.driver.p4util as p4util
-from psi4.driver.procedures import proc_util
+from psi4.driver.procrouting import proc_util
 
-def run_ugacc(name, **kwargs):
-    r"""Function encoding sequence of PSI module and plugin calls so that
-    ugacc can be called via :py:func:`~driver.energy`. For post-scf plugins.
+def run_ccreorg(name, **kwargs):
+    """Function encoding sequence of PSI module and plugin calls so that
+    ccreorg can be called via :py:func:`~driver.energy`. For post-scf plugins.
 
-    >>> energy('ugacc')
+    >>> energy('ccreorg')
 
     """
     lowername = name.lower()
@@ -52,17 +52,17 @@ def run_ugacc(name, **kwargs):
         scf_wfn = psi4.driver.scf_helper(name, **kwargs)
     proc_util.check_iwl_file_from_scf_type(psi4.core.get_option('SCF', 'SCF_TYPE'), scf_wfn)
 
-    return psi4.core.plugin('ugacc.so', scf_wfn)
+    return psi4.core.plugin('ccreorg.so', scf_wfn)
 
-def run_ugacc_gradient(name, **kwargs):
+def run_ccreorg_gradient(name, **kwargs):
+    """Function encoding sequence of PSI module and plugin calls so that
+    ccreorg can be called via :py:func: `driver.gradient`. For post-scf plugins.
+
+    >>> gradient('ccreorg')
+    """
     psi4.core.set_global_option('DERTYPE', 'FIRST')
-    return run_ugacc(name, **kwargs)
+    return run_ccreorg(name, **kwargs)
 
 # Integration with driver routines
-psi4.driver.procedures['energy']['ugacc'] = run_ugacc
-psi4.driver.procedures['gradient']['ugacc'] = run_ugacc_gradient
-
-
-def exampleFN():
-    # Your Python code goes here
-    pass
+psi4.driver.procedures['energy']['ccreorg'] = run_ccreorg
+psi4.driver.procedures['gradient']['ccreorg'] = run_ccreorg_gradient

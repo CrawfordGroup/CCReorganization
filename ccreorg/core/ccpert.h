@@ -10,7 +10,7 @@
 
 using namespace std;
 
-namespace psi { namespace ugacc {
+namespace psi { namespace ccreorg {
 
 enum hand {left, right};
 
@@ -88,6 +88,6 @@ protected:
   friend class CCResp;
 };
 
-}} // psi::ugacc
+}} // psi::ccreorg
 
 #endif

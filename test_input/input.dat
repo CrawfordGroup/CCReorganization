@@ -1,7 +1,4 @@
-# PYTHONPATH must include directory above plugin directory.
-#     Define either externally or here, then import plugin.
-sys.path.insert(0, './..')
-import ugacc
+import ccreorg
 
 #molecule {
 #0 1
@@ -42,4 +39,4 @@ set {
   myhand left 
   my_omega 0.01
 }
-energy('ugacc')
+energy('ccreorg')
