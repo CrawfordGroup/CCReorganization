@@ -29,7 +29,7 @@
 
 import psi4
 import psi4.driver.p4util as p4util
-from psi4.driver.procedures import proc_util
+from psi4.driver.procrouting import proc_util
 
 def run_ccreorg(name, **kwargs):
     """Function encoding sequence of PSI module and plugin calls so that
