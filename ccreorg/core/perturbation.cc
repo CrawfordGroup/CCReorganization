@@ -5,7 +5,6 @@
 #include <psi4/libmints/mintshelper.h>
 #include <psi4/libmints/matrix.h>
 #include "psi4/libpsi4util/PsiOutStream.h"
-#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi { namespace ccreorg {
 typedef psi::PsiOutStream  OutFile;
